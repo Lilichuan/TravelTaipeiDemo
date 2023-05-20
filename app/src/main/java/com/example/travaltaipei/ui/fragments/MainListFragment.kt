@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.travaltaipei.R
 import com.example.travaltaipei.databinding.FragmentMainListBinding
 import com.example.travaltaipei.viewmodel.MyListViewModel
@@ -25,23 +27,35 @@ class MainListFragment : Fragment() {
 
     lateinit var binding: FragmentMainListBinding
     lateinit var viewModel: MyListViewModel
+    lateinit var adapter : MainListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        adapter = MainListAdapter()
         binding = FragmentMainListBinding.inflate(inflater)
-        // Inflate the layout for this fragment
+        LinearLayoutManager(context).let {
+            it.orientation = LinearLayoutManager.VERTICAL
+            binding.recyclerView.layoutManager= it
+            binding.recyclerView.adapter = adapter
+        }
+
         return binding.root
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         viewModel = ViewModelProvider(this).get(MyListViewModel::class.java)
+        viewModel.listData.observe(this, Observer {
+            adapter.dataList = it
+            adapter.notifyDataSetChanged()
+        })
     }
 
     companion object {
@@ -51,7 +65,4 @@ class MainListFragment : Fragment() {
             MainListFragment()
     }
 
-    private fun initAdapter(){
-        //binding.recyclerView
-    }
 }
