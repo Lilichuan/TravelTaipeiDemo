@@ -46,10 +46,7 @@ class MyListViewModel : ViewModel() {
     var total = -1
 
 
-
-
-
-    lateinit var selectData: ListItemData
+    var selectData: ListItemData? = null
 
     fun getMainList(lang: String) {
         showLog("parameter lang is:$lang")

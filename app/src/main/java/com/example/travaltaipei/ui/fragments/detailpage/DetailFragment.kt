@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.travaltaipei.R
@@ -60,7 +61,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun initDataFromViewModel() {
-        val viewModel = ViewModelProvider(this).get(MyListViewModel::class.java)
+        val viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(MyListViewModel::class.java)
         data = viewModel.selectData
     }
 

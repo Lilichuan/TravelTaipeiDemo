@@ -40,20 +40,15 @@ class MainListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        adapter = MainListAdapter()
-        binding = FragmentMainListBinding.inflate(inflater)
-        LinearLayoutManager(context).let {
-            it.orientation = LinearLayoutManager.VERTICAL
-            binding.recyclerView.layoutManager= it
-            binding.recyclerView.adapter = adapter
-        }
 
+        binding = FragmentMainListBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         viewModel = ViewModelProvider(this).get(MyListViewModel::class.java)
+
         viewModel.listData.observe(this, Observer {
             if(viewModel.addableListData.isEmpty()){
                 findNavController().navigate(R.id.action_main_list_to_net_error)
@@ -66,10 +61,24 @@ class MainListFragment : Fragment() {
                 adapter.dataList = it
                 adapter.notifyDataSetChanged()
             }
-
         })
 
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        initRecyclerView()
         startGetDataFromNet()
+    }
+
+    private fun initRecyclerView() {
+        adapter = MainListAdapter(viewModel)
+        LinearLayoutManager(context).let {
+            it.orientation = LinearLayoutManager.VERTICAL
+            binding.recyclerView.layoutManager= it
+            binding.recyclerView.adapter = adapter
+        }
     }
 
     private fun startGetDataFromNet(){
