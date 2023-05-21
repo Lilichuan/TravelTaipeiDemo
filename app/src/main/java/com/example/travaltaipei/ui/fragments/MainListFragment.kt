@@ -56,6 +56,8 @@ class MainListFragment : Fragment() {
             adapter.dataList = it
             adapter.notifyDataSetChanged()
         })
+        val param = getString(R.string.country_lang)
+        viewModel.getMainList(param)
     }
 
     companion object {

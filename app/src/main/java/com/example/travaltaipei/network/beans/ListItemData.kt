@@ -21,6 +21,9 @@ class ListItemData {
     @SerializedName("official_site")
     var official_site : String? = null
 
+    @SerializedName("remind")
+    var remind : String? = null
+
     @SerializedName("images")
     var images : List<MainListItemDataImage>? = null
 

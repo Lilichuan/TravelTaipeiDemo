@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">Taipei Guide</string>
     <string name="country_lang">id</string>
+    <string name="to_web_site">Go to Web site</string>
 </resources>

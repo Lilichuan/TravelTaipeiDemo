@@ -24,6 +24,8 @@ class MyListViewModel : ViewModel(){
         .baseUrl("www.travel.taipei/open-api")
         .build()
 
+    lateinit var selectData : ListItemData
+
     fun getMainList(lang : String){
         viewModelScope.launch {
             try {
