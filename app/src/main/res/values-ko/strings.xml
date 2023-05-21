@@ -3,4 +3,12 @@
     <string name="app_name">Taipei Guide</string>
     <string name="country_lang">ko</string>
     <string name="to_web_site">Go to Web site</string>
+
+    <string name="main_page_label">Taipei Guide</string>
+    <string name="detail_page_label">Spot Guide</string>
+    <string name="web_site_label">Web site</string>
+
+    <string name="net_error">There has some issue</string>
+    <string name="try_again">Try again</string>
+    <string name="error_title_label">Opps</string>
 </resources>

@@ -8,10 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.travaltaipei.R
 import com.example.travaltaipei.databinding.FragmentMainListBinding
 import com.example.travaltaipei.viewmodel.MyListViewModel
+import com.google.android.material.snackbar.Snackbar
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,9 +55,24 @@ class MainListFragment : Fragment() {
         super.onAttach(context)
         viewModel = ViewModelProvider(this).get(MyListViewModel::class.java)
         viewModel.listData.observe(this, Observer {
-            adapter.dataList = it
-            adapter.notifyDataSetChanged()
+            if(viewModel.addableListData.isEmpty()){
+                findNavController().navigate(R.id.action_main_list_to_net_error)
+                //                val snackbar = Snackbar.make(binding.root, R.string.net_error, Snackbar.LENGTH_LONG)
+//                    .setAction(R.string.try_again){
+//                        startGetDataFromNet()
+//                    }
+//                snackbar.show()
+            }else{
+                adapter.dataList = it
+                adapter.notifyDataSetChanged()
+            }
+
         })
+
+        startGetDataFromNet()
+    }
+
+    private fun startGetDataFromNet(){
         val param = getString(R.string.country_lang)
         viewModel.getMainList(param)
     }

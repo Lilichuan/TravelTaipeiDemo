@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/main_list">
+
+    <fragment
+        android:id="@+id/main_list"
+        android:name="com.example.travaltaipei.ui.fragments.MainListFragment"
+        android:label="@string/main_page_label"
+        tools:layout="@layout/fragment_main_list">
+        <action
+            android:id="@+id/action_main_list_to_detail_page"
+            app:destination="@id/detail_page" />
+        <action
+            android:id="@+id/action_main_list_to_net_error"
+            app:destination="@id/net_error" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detail_page"
+        android:name="com.example.travaltaipei.ui.fragments.detailpage.DetailFragment"
+        android:label="@string/detail_page_label"
+        tools:layout="@layout/fragment_detail">
+        <action
+            android:id="@+id/action_detail_page_to_web_site"
+            app:destination="@id/web_site" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/web_site"
+        android:name="com.example.travaltaipei.ui.fragments.WebViewFragment"
+        android:label="@string/to_web_site"
+        tools:layout="@layout/fragment_web_view"/>
+
+    <fragment
+        android:id="@+id/net_error"
+        android:name="com.example.travaltaipei.ui.fragments.InternetErrorFragment"
+        android:label="@string/error_title_label"
+        tools:layout="@layout/fragment_internet_error">
+        <action
+            android:id="@+id/action_net_error_to_main_list"
+            app:destination="@id/main_list" />
+    </fragment>
+
+</navigation>

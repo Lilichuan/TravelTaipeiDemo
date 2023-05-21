@@ -19,14 +19,16 @@ class MyListViewModel : ViewModel(){
     }
 
     var listData : MutableLiveData<List<ListItemData>> = MutableLiveData<List<ListItemData>>()
+    var addableListData = ArrayList<ListItemData>()
 
     var retrofit = Retrofit.Builder()
-        .baseUrl("www.travel.taipei/open-api")
+        .baseUrl("https://www.travel.taipei/open-api/")
         .build()
 
     lateinit var selectData : ListItemData
 
     fun getMainList(lang : String){
+        showLog("parameter lang is:$lang")
         viewModelScope.launch {
             try {
                 val api = retrofit.create(TravelTaipeiApi::class.java)
@@ -34,13 +36,16 @@ class MyListViewModel : ViewModel(){
                 if (response.isSuccessful){
                     showLog("api getMainPageList() success")
                     response.body()?.data?.let {
-                        listData.value = it
+                        addableListData.addAll(it)
+                        listData.value = addableListData
                     }
                 } else{
                     showLog("api getMainPageList() not success")
                 }
             }catch (exception : Exception){
                 exception.printStackTrace()
+                showLog("MyListViewModel.getMainList() have Exception")
+                listData.value = addableListData
             }
         }
 
