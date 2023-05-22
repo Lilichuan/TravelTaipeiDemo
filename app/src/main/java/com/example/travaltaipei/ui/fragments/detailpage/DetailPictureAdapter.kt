@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import coil.load
 import com.example.travaltaipei.R
 import com.example.travaltaipei.network.beans.MainListItemDataImage
+import com.squareup.picasso.Picasso
 
 class DetailPictureAdapter(val list : List<MainListItemDataImage>) : Adapter<DetailPictureViewHolder>() {
 
@@ -23,7 +24,7 @@ class DetailPictureAdapter(val list : List<MainListItemDataImage>) : Adapter<Det
     override fun onBindViewHolder(holder: DetailPictureViewHolder, position: Int) {
         val data = list.get(position).src
         if(!TextUtils.isEmpty(data)){
-            holder.imageView.load(data)
+            //Picasso.with(holder.imageView.context).load(data).into(holder.imageView)
         }
     }
 

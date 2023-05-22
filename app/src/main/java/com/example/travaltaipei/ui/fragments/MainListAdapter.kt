@@ -1,15 +1,19 @@
 package com.example.travaltaipei.ui.fragments
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.travaltaipei.R
 import com.example.travaltaipei.databinding.MainListItemBinding
 import com.example.travaltaipei.network.beans.ListItemData
+import com.example.travaltaipei.ui.fragments.detailpage.SINGLE_DATA_KEY
 import com.example.travaltaipei.viewmodel.MyListViewModel
+import com.squareup.picasso.Picasso
 
-class MainListAdapter(var viewModel : MyListViewModel) : Adapter<MainListViewHolder>() {
+class MainListAdapter(var context : Context?, var viewModel : MyListViewModel) : Adapter<MainListViewHolder>() {
 
     var dataList: List<ListItemData>? = null
 
@@ -18,8 +22,10 @@ class MainListAdapter(var viewModel : MyListViewModel) : Adapter<MainListViewHol
         val viewHolder = MainListViewHolder(viewBind.root, viewBind)
         viewBind.root.setOnClickListener {
             val data = it.tag as ListItemData
+            val str = viewModel.gson.toJson(data)
+            val bundle = bundleOf(SINGLE_DATA_KEY to str)
             viewModel.selectData = data
-            it.findNavController().navigate(R.id.action_main_list_to_detail_page)
+            it.findNavController().navigate(R.id.action_main_list_to_detail_page, bundle)
         }
         return viewHolder
     }
@@ -37,6 +43,10 @@ class MainListAdapter(var viewModel : MyListViewModel) : Adapter<MainListViewHol
         data?.let {
             holder.setData(it)
         }
+    }
+
+    fun onDestroy(){
+        //Picasso.with(context).shutdown()
     }
 
 }

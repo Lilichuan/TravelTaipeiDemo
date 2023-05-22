@@ -2,7 +2,7 @@ package com.example.travaltaipei.network.beans
 
 import com.google.gson.annotations.SerializedName
 
-class ListItemData {
+class ListItemData  {
     @SerializedName("id")
     var id : Int = 0
 

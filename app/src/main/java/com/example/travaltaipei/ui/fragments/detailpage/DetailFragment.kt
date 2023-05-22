@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.travaltaipei.R
@@ -15,10 +16,8 @@ import com.example.travaltaipei.databinding.FragmentDetailBinding
 import com.example.travaltaipei.network.beans.ListItemData
 import com.example.travaltaipei.viewmodel.MyListViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+
+const val SINGLE_DATA_KEY = "single_data_key"
 
 /**
  * A simple [Fragment] subclass.
@@ -30,6 +29,7 @@ class DetailFragment : Fragment() {
     lateinit var viewBind: FragmentDetailBinding
     var data: ListItemData? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -40,10 +40,15 @@ class DetailFragment : Fragment() {
     ): View? {
         viewBind = FragmentDetailBinding.inflate(inflater)
         initDataFromViewModel()
-        initPictureRecyclerView()
+
         initButton()
         initText()
         return viewBind.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        initPictureRecyclerView()
     }
 
     private fun initText (){
@@ -62,7 +67,10 @@ class DetailFragment : Fragment() {
 
     private fun initDataFromViewModel() {
         val viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(MyListViewModel::class.java)
-        data = viewModel.selectData
+        val str = arguments?.getString(SINGLE_DATA_KEY)
+        str?.let {
+            data = viewModel.gson.fromJson(str, ListItemData::class.java)
+        }
     }
 
     private fun initPictureRecyclerView() {
@@ -85,7 +93,7 @@ class DetailFragment : Fragment() {
         } else {
             viewBind.toWebsite.setOnClickListener {
                 //TODO start webview Here
-
+                findNavController().navigate(R.id.action_detail_page_to_web_site)
             }
         }
 

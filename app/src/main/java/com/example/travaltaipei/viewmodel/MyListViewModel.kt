@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.travaltaipei.network.TravelTaipeiApi
 import com.example.travaltaipei.network.beans.ListItemData
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,20 +20,22 @@ class MyListViewModel : ViewModel() {
 
     private val logging = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
         override fun log(message: String) {
-            showLog(message)
+            //showLog(message)
         }
     })
 
     private var okHttpClient : OkHttpClient
     val retrofit : Retrofit
+    val gson = Gson()
 
     init {
 
         logging.level = HttpLoggingInterceptor.Level.BODY
         okHttpClient = OkHttpClient().newBuilder().addInterceptor(logging).build()
+
         retrofit = Retrofit.Builder()
             .baseUrl("https://www.travel.taipei/open-api/")
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()
 //        retrofit = Retrofit.Builder()
