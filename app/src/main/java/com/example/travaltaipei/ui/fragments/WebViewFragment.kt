@@ -5,10 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebSettings
 import android.webkit.WebView
 import com.example.travaltaipei.databinding.FragmentWebViewBinding
 
-private const val ARG_URL = "param1"
+const val ARG_WEB_VIEW_URL = "param1"
 
 
 class WebViewFragment : Fragment() {
@@ -19,7 +20,7 @@ class WebViewFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            url = it.getString(ARG_URL)
+            url = it.getString(ARG_WEB_VIEW_URL)
         }
     }
 
@@ -33,17 +34,11 @@ class WebViewFragment : Fragment() {
     }
 
     private fun initWebView(webView: WebView){
-
+        val webSetting = webView.settings
+        webSetting.cacheMode = WebSettings.LOAD_NO_CACHE
+        webSetting.setSupportZoom(true)
+        webSetting.javaScriptEnabled = false
+        url?.let { webView.loadUrl(it) }
     }
 
-    companion object {
-
-        @JvmStatic
-        fun newInstance(url: String) =
-            WebViewFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_URL, url)
-                }
-            }
-    }
 }

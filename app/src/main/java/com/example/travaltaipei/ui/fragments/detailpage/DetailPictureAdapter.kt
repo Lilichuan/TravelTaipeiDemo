@@ -13,7 +13,7 @@ class DetailPictureAdapter(val list : List<MainListItemDataImage>) : Adapter<Det
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailPictureViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.detail_image_item, parent)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.detail_image_item, parent, false)
         return DetailPictureViewHolder(view)
     }
 

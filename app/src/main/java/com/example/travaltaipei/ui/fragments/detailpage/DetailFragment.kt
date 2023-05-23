@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.fragment.findNavController
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.travaltaipei.R
 import com.example.travaltaipei.databinding.FragmentDetailBinding
 import com.example.travaltaipei.network.beans.ListItemData
+import com.example.travaltaipei.ui.fragments.ARG_WEB_VIEW_URL
 import com.example.travaltaipei.viewmodel.MyListViewModel
 
 
@@ -92,8 +94,8 @@ class DetailFragment : Fragment() {
             viewBind.toWebsite.visibility = View.GONE
         } else {
             viewBind.toWebsite.setOnClickListener {
-                //TODO start webview Here
-                findNavController().navigate(R.id.action_detail_page_to_web_site)
+                val bundle = bundleOf(ARG_WEB_VIEW_URL to data?.official_site )
+                findNavController().navigate(R.id.action_detail_page_to_web_site,bundle)
             }
         }
 
