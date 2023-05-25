@@ -11,15 +11,15 @@ import com.example.travaltaipei.databinding.MainListItemBinding
 import com.example.travaltaipei.network.beans.ListItemData
 import com.example.travaltaipei.ui.fragments.detailpage.SINGLE_DATA_KEY
 import com.example.travaltaipei.viewmodel.MyListViewModel
-import com.squareup.picasso.Picasso
 
-class MainListAdapter(var context : Context?, var viewModel : MyListViewModel) : Adapter<MainListViewHolder>() {
+class MainListAdapter(var context: Context?, var viewModel: MyListViewModel, val screenW: Int) :
+    Adapter<MainListViewHolder>() {
 
     var dataList: List<ListItemData>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainListViewHolder {
         val viewBind = MainListItemBinding.inflate(LayoutInflater.from(parent.context))
-        val viewHolder = MainListViewHolder(viewBind.root, viewBind)
+        val viewHolder = MainListViewHolder(viewBind.root, viewBind, screenW)
         viewBind.root.setOnClickListener {
             val data = it.tag as ListItemData
             val str = viewModel.gson.toJson(data)
@@ -39,14 +39,10 @@ class MainListAdapter(var context : Context?, var viewModel : MyListViewModel) :
     }
 
     override fun onBindViewHolder(holder: MainListViewHolder, position: Int) {
-        val data = dataList?.get(position)
-        data?.let {
+        dataList?.get(position)?.let {
             holder.setData(it)
         }
     }
 
-    fun onDestroy(){
-        //Picasso.with(context).shutdown()
-    }
 
 }

@@ -33,7 +33,7 @@ class WebViewFragment : Fragment() {
         return bind.root
     }
 
-    private fun initWebView(webView: WebView){
+    private fun initWebView(webView: WebView) {
         val webSetting = webView.settings
         webSetting.cacheMode = WebSettings.LOAD_NO_CACHE
         webSetting.setSupportZoom(true)

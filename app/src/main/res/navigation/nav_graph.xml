@@ -31,7 +31,7 @@
     <fragment
         android:id="@+id/web_site"
         android:name="com.example.travaltaipei.ui.fragments.WebViewFragment"
-        android:label="@string/to_web_site"
+        android:label="@string/web_site_label"
         tools:layout="@layout/fragment_web_view"/>
 
     <fragment

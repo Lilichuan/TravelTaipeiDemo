@@ -1,13 +1,14 @@
 package com.example.travaltaipei.ui.fragments.detailpage
 
+import android.net.Uri
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import coil.load
 import com.example.travaltaipei.R
 import com.example.travaltaipei.network.beans.MainListItemDataImage
-import com.squareup.picasso.Picasso
 
 class DetailPictureAdapter(val list : List<MainListItemDataImage>) : Adapter<DetailPictureViewHolder>() {
 
@@ -22,10 +23,18 @@ class DetailPictureAdapter(val list : List<MainListItemDataImage>) : Adapter<Det
     }
 
     override fun onBindViewHolder(holder: DetailPictureViewHolder, position: Int) {
-        val data = list.get(position).src
-        if(!TextUtils.isEmpty(data)){
-            //Picasso.with(holder.imageView.context).load(data).into(holder.imageView)
+        val urlStr = list.get(position).src
+        if(!TextUtils.isEmpty(urlStr)){
+            val uri = createUri(urlStr)
+            holder.imageView.load(uri)
         }
     }
 
+}
+
+fun createUri(str : String?) : Uri {
+    str?.let {
+        return str.toUri().buildUpon().scheme("https").build()
+    }
+    return Uri.EMPTY
 }

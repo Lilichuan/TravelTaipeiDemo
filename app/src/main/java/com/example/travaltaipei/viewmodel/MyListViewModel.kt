@@ -24,8 +24,8 @@ class MyListViewModel : ViewModel() {
         }
     })
 
-    private var okHttpClient : OkHttpClient
-    val retrofit : Retrofit
+    private var okHttpClient: OkHttpClient
+    val retrofit: Retrofit
     val gson = Gson()
 
     init {
@@ -38,10 +38,6 @@ class MyListViewModel : ViewModel() {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()
-//        retrofit = Retrofit.Builder()
-//            .baseUrl("https://www.travel.taipei/open-api/")
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
     }
 
     var listData: MutableLiveData<List<ListItemData>> = MutableLiveData<List<ListItemData>>()
@@ -57,9 +53,7 @@ class MyListViewModel : ViewModel() {
             withContext(Dispatchers.IO) {
                 getMainListSus(lang)
             }
-
         }
-
     }
 
     private fun getMainListSus(lang: String) {
