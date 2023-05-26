@@ -6,6 +6,8 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
+        android:theme="@style/ToolbarTheme"
+        app:titleTextAppearance="@style/TitleTextSize"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         app:layout_constraintTop_toTopOf="parent"
