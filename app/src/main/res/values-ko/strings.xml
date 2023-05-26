@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Taipei Guide</string>
+    <string name="app_name">타이베이 가이드</string>
     <string name="country_lang">ko</string>
-    <string name="to_web_site">Go to Web site</string>
+    <string name="to_web_site">웹 사이트</string>
 
-    <string name="main_page_label">Taipei Guide</string>
-    <string name="detail_page_label">Spot Guide</string>
-    <string name="web_site_label">Web site</string>
+    <string name="main_page_label">타이베이 가이드</string>
+    <string name="detail_page_label">스팟 안내</string>
+    <string name="web_site_label">웹 사이트</string>
 
-    <string name="net_error">There has some issue</string>
-    <string name="try_again">Try again</string>
-    <string name="error_title_label">Opps</string>
+    <string name="net_error">문제가 있습니다.</string>
+    <string name="try_again">다시 시도하십시오</string>
+    <string name="error_title_label">죄송합니다</string>
 </resources>

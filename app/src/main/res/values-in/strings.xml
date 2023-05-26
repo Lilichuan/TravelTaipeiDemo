@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Taipei Guide</string>
+    <string name="app_name">Panduan Taipei</string>
     <string name="country_lang">id</string>
-    <string name="to_web_site">Go to Web site</string>
+    <string name="to_web_site">Situs web</string>
 
-    <string name="main_page_label">Taipei Guide</string>
-    <string name="detail_page_label">Spot Guide</string>
-    <string name="web_site_label">Web site</string>
+    <string name="main_page_label">Panduan Taipei</string>
+    <string name="detail_page_label">Panduan Tempat</string>
+    <string name="web_site_label">Situs web</string>
 
-    <string name="net_error">There has some issue</string>
-    <string name="try_again">Try again</string>
-    <string name="error_title_label">Opps</string>
+    <string name="net_error">Ada beberapa masalah</string>
+    <string name="try_again">Coba lagi</string>
+    <string name="error_title_label">Maaf</string>
 </resources>

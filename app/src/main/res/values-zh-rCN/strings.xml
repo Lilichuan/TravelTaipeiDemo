@@ -2,13 +2,13 @@
 <resources>
     <string name="app_name">Taipei Guide</string>
     <string name="country_lang">zh-cn</string>
-    <string name="to_web_site">Go to Web site</string>
+    <string name="to_web_site">官方网站</string>
 
     <string name="main_page_label">Taipei Guide</string>
-    <string name="detail_page_label">Spot Guide</string>
-    <string name="web_site_label">Web site</string>
+    <string name="detail_page_label">景点</string>
+    <string name="web_site_label">官方网站</string>
 
-    <string name="net_error">There has some issue</string>
-    <string name="try_again">Try again</string>
-    <string name="error_title_label">Opps</string>
+    <string name="net_error">发生问题了</string>
+    <string name="try_again">再试一次</string>
+    <string name="error_title_label">抱歉</string>
 </resources>

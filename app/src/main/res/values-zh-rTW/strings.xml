@@ -5,10 +5,10 @@
     <string name="to_web_site">Go to Web site</string>
 
     <string name="main_page_label">Taipei Guide</string>
-    <string name="detail_page_label">Spot Guide</string>
-    <string name="web_site_label">Web site</string>
+    <string name="detail_page_label">景點</string>
+    <string name="web_site_label">官方網站</string>
 
-    <string name="net_error">There has some issue</string>
-    <string name="try_again">Try again</string>
-    <string name="error_title_label">Opps</string>
+    <string name="net_error">發生問題了</string>
+    <string name="try_again">再試一次</string>
+    <string name="error_title_label">抱歉</string>
 </resources>

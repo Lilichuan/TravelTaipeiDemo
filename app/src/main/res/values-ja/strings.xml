@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Taipei Guide</string>
+    <string name="app_name">台北旅行ガイド</string>
     <string name="country_lang">ja</string>
-    <string name="to_web_site">Go to Web site</string>
+    <string name="to_web_site">公式サイト</string>
 
-    <string name="main_page_label">Taipei Guide</string>
-    <string name="detail_page_label">Spot Guide</string>
-    <string name="web_site_label">Web site</string>
+    <string name="main_page_label">台北旅行ガイド</string>
+    <string name="detail_page_label">観光名所</string>
+    <string name="web_site_label">公式サイト</string>
 
-    <string name="net_error">There has some issue</string>
-    <string name="try_again">Try again</string>
-    <string name="error_title_label">Opps</string>
+    <string name="net_error">アプリは技術問題が起こっています</string>
+    <string name="try_again">再試行する</string>
+    <string name="error_title_label">すみません</string>
 </resources>
