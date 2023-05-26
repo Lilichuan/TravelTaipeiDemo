@@ -1,11 +1,16 @@
 package com.example.travaltaipei.ui.fragments
 
+import android.net.ConnectivityManager
+import android.net.Network
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.travaltaipei.R
 import com.example.travaltaipei.databinding.FragmentInternetErrorBinding
 
@@ -22,25 +27,37 @@ private const val ARG_PARAM2 = "param2"
 class InternetErrorFragment : Fragment() {
 
     lateinit var viewBinder : FragmentInternetErrorBinding
+    var connectivityManager : ConnectivityManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        connectivityManager = getSystemService(requireContext(), ConnectivityManager::class.java)
+        connectivityManager?.addDefaultNetworkActiveListener {
+            gotoMainPage()
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         viewBinder = FragmentInternetErrorBinding.inflate(inflater)
         viewBinder.tryAgainBtn.setOnClickListener {
-            //val action = Direction
-            it.findNavController().navigate(R.id.action_net_error_to_main_list)
+            gotoMainPage()
         }
 
         return viewBinder.root
     }
 
+    private fun gotoMainPage() {
+        findNavController().navigate(R.id.action_net_error_to_main_list)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        connectivityManager?.removeDefaultNetworkActiveListener {
+            gotoMainPage()
+        }
+    }
 
 }

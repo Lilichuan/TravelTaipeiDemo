@@ -1,5 +1,7 @@
 package com.example.travaltaipei.ui.fragments.detailpage
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
@@ -94,11 +96,33 @@ class DetailFragment : Fragment() {
             viewBind.toWebsite.visibility = View.GONE
         } else {
             viewBind.toWebsite.setOnClickListener {
-                val bundle = bundleOf(ARG_WEB_VIEW_URL to data?.official_site )
-                findNavController().navigate(R.id.action_detail_page_to_web_site,bundle)
+                data?.official_site?.let {
+                    if(TextUtils.isEmpty(it)){
+                        return@let
+                    }
+                    //openWebPage(it)
+                    toWebView(it)
+                }
             }
         }
 
     }
+
+    fun toWebView(url: String){
+        val bundle = bundleOf(ARG_WEB_VIEW_URL to url )
+        findNavController().navigate(R.id.action_detail_page_to_web_site,bundle)
+    }
+
+    fun openWebPage(url: String) {
+        val webpage: Uri = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW, webpage)
+        activity?.let {
+            if (intent.resolveActivity(it.packageManager) != null) {
+                startActivity(intent)
+            }
+        }
+
+    }
+
 
 }
