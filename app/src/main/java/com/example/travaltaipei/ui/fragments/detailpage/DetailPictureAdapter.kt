@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import coil.load
 import com.example.travaltaipei.R
 import com.example.travaltaipei.network.beans.MainListItemDataImage
+import com.squareup.picasso.Picasso
 
 class DetailPictureAdapter(val list : List<MainListItemDataImage>) : Adapter<DetailPictureViewHolder>() {
 
@@ -26,7 +27,8 @@ class DetailPictureAdapter(val list : List<MainListItemDataImage>) : Adapter<Det
         val urlStr = list.get(position).src
         if(!TextUtils.isEmpty(urlStr)){
             val uri = createUri(urlStr)
-            holder.imageView.load(uri)
+            //holder.imageView.load(uri)
+            Picasso.with(holder.imageView.context).load(uri).into(holder.imageView)
         }
     }
 

@@ -7,6 +7,7 @@ import com.example.travaltaipei.databinding.MainListItemBinding
 import com.example.travaltaipei.network.beans.ListItemData
 import com.example.travaltaipei.ui.fragments.detailpage.createUri
 import com.example.travaltaipei.viewmodel.showLog
+import com.squareup.picasso.Picasso
 
 class MainListViewHolder(itemView: View, viewBinding: MainListItemBinding, val screenW: Int) :
     ViewHolder(itemView) {
@@ -29,8 +30,8 @@ class MainListViewHolder(itemView: View, viewBinding: MainListItemBinding, val s
         data.images?.get(0)?.let {
             val uri = createUri(it.src)
             showLog("MainListViewHolder: start ${it.src}")
-            _binding.imageView.load(uri)
-
+            //_binding.imageView.load(uri)
+            Picasso.with(_binding.imageView.context).load(uri).into(_binding.imageView)
         }
     }
 

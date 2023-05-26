@@ -6,7 +6,7 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="@dimen/detail_pic_size"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/detail_pic_size"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -20,7 +20,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:gravity="start"
         android:textSize="18sp"
         android:textColor="@color/white"
         android:background="@color/black_tr"
