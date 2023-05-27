@@ -20,6 +20,13 @@ class MainListAdapter(var context: Context?, var viewModel: MyListViewModel, val
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainListViewHolder {
         val viewBind = MainListItemBinding.inflate(LayoutInflater.from(parent.context))
         val viewHolder = MainListViewHolder(viewBind.root, viewBind, screenW)
+        if(screenW > 0){
+            viewBind.root.minWidth = screenW
+            viewBind.root.maxWidth = screenW
+            viewBind.imageView.maxWidth = screenW
+            viewBind.imageView.minimumWidth = screenW
+        }
+
         viewBind.root.setOnClickListener {
             val data = it.tag as ListItemData
             val str = viewModel.gson.toJson(data)
