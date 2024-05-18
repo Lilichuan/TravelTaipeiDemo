@@ -73,7 +73,7 @@ class DetailFragment : Fragment() {
         val viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(MyListViewModel::class.java)
         val str = arguments?.getString(SINGLE_DATA_KEY)
         str?.let {
-            data = viewModel.gson.fromJson(str, ListItemData::class.java)
+            data = viewModel.getGson().fromJson(str, ListItemData::class.java)
         }
     }
 

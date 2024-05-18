@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.travaltaipei.R
 import com.example.travaltaipei.databinding.FragmentMainListBinding
@@ -40,27 +42,22 @@ class MainListFragment : Fragment() {
     ): View? {
 
         binding = FragmentMainListBinding.inflate(inflater)
+        initScreenWH()
+        initRecyclerView()
+
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                val items = viewModel.queryItems(getString(R.string.country_lang))
+                items.collectLatest {
+                    adapter.submitData(it)
+                }
+            }
+
+        }
         return binding.root
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        //MyListViewModel
 
-    }
-
-    override fun onStart() {
-        super.onStart()
-        initScreenWH()
-        initRecyclerView()
-        viewModel.lang = getString(R.string.country_lang)
-        val items = viewModel.items
-        lifecycleScope.launch {
-            items.collectLatest {
-                adapter.submitData(it)
-            }
-        }
-    }
 
     private fun initRecyclerView() {
         adapter = MainListAdapter(context ,viewModel.getGson(), screenW)
@@ -89,12 +86,5 @@ class MainListFragment : Fragment() {
     }
 
 
-
-    companion object {
-
-        @JvmStatic
-        fun newInstance() =
-            MainListFragment()
-    }
 
 }
