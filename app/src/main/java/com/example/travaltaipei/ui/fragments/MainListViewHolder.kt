@@ -2,7 +2,6 @@ package com.example.travaltaipei.ui.fragments
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import coil.load
 import com.example.travaltaipei.databinding.MainListItemBinding
 import com.example.travaltaipei.network.beans.ListItemData
 import com.example.travaltaipei.ui.fragments.detailpage.createUri

@@ -19,23 +19,13 @@ import com.example.travaltaipei.viewmodel.MyListViewModel
 import com.example.travaltaipei.viewmodel.showLog
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MainListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MainListFragment : Fragment() {
 
-    lateinit var binding: FragmentMainListBinding
-    lateinit var viewModel: MyListViewModel
-    lateinit var adapter : MainListAdapter
-    var screenW = 0
-    var screenH = 0
+    private lateinit var binding: FragmentMainListBinding
+    private lateinit var viewModel: MyListViewModel
+    private lateinit var adapter : MainListAdapter
+    private var screenW = 0
+    private var screenH = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

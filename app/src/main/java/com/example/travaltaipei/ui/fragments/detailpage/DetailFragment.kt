@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.travaltaipei.R
 import com.example.travaltaipei.databinding.FragmentDetailBinding
 import com.example.travaltaipei.network.beans.ListItemData
@@ -23,11 +22,7 @@ import com.example.travaltaipei.viewmodel.MyListViewModel
 
 const val SINGLE_DATA_KEY = "single_data_key"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DetailFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class DetailFragment : Fragment() {
 
     lateinit var viewBind: FragmentDetailBinding

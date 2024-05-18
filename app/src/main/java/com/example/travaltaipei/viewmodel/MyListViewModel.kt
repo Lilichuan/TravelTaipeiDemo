@@ -9,6 +9,11 @@ import com.example.travaltaipei.network.TravelTaipeiApi
 import com.example.travaltaipei.network.beans.ListItemData
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -51,40 +56,34 @@ class MyListViewModel : ViewModel() {
         showLog("parameter lang is:$lang")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                getMainListSus(lang)
-            }
-        }
-    }
-
-    private fun getMainListSus(lang: String) {
-        val page = countPage()
-        if (page < 1) {
-            return
-        }
-
-        try {
-            val api = retrofit.create(TravelTaipeiApi::class.java)
-            val response = api.getMainPageList(lang, page).execute()
-            if (response.isSuccessful) {
-                showLog("api getMainPageList() success")
-                response.body()?.let {
-                    total = it.total
+                val page = countPage()
+                if (page < 1) {
+                    return@withContext
                 }
 
-                response.body()?.data?.let {
-                    addableListData.addAll(it)
+                flow {
+                    val api = retrofit.create(TravelTaipeiApi::class.java)
+                    emit(api.getMainPageList(lang, page).execute())
+                }.filter {
+                    it.isSuccessful
+                }.catch {
+                    it.printStackTrace()
+                    showLog("MyListViewModel.getMainList() have Exception")
                     listData.postValue(addableListData)
-                }
+                }.flowOn(Dispatchers.IO).collectLatest {
+                    it.body()?.let {
+                        total = it.total
+                    }
 
-            } else {
-                showLog("api getMainPageList() not success")
+                    it.body()?.data?.let {
+                        addableListData.addAll(it)
+                        listData.postValue(addableListData)
+                    }
+                }
             }
-        } catch (exception: Exception) {
-            exception.printStackTrace()
-            showLog("MyListViewModel.getMainList() have Exception")
-            listData.postValue(addableListData)
         }
     }
+
 
     private fun countPage(): Int {
         if (addableListData.isEmpty()) return 1
