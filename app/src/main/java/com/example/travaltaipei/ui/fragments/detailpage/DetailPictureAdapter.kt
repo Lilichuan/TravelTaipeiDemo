@@ -25,6 +25,7 @@ class DetailPictureAdapter(val list : List<MainListItemDataImage>) : Adapter<Det
 
     override fun onBindViewHolder(holder: DetailPictureViewHolder, position: Int) {
         val urlStr = list.get(position).src
+        holder.imageView.setImageDrawable(null)
         if(!TextUtils.isEmpty(urlStr)){
             val uri = createUri(urlStr)
             //holder.imageView.load(uri)

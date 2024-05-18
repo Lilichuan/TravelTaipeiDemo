@@ -70,7 +70,7 @@ class MainListFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        adapter = MainListAdapter(context ,viewModel, screenW)
+        adapter = MainListAdapter(context ,viewModel, screenW, getString(R.string.country_lang))
         LinearLayoutManager(context).let {
             it.orientation = LinearLayoutManager.VERTICAL
             binding.recyclerView.layoutManager= it

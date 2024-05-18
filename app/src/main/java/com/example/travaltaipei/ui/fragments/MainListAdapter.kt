@@ -12,7 +12,9 @@ import com.example.travaltaipei.network.beans.ListItemData
 import com.example.travaltaipei.ui.fragments.detailpage.SINGLE_DATA_KEY
 import com.example.travaltaipei.viewmodel.MyListViewModel
 
-class MainListAdapter(var context: Context?, var viewModel: MyListViewModel, val screenW: Int) :
+class MainListAdapter(var context: Context?, var viewModel: MyListViewModel,
+                      private val screenW: Int,
+                      private val lang : String) :
     Adapter<MainListViewHolder>() {
 
     var dataList: List<ListItemData>? = null
@@ -45,10 +47,20 @@ class MainListAdapter(var context: Context?, var viewModel: MyListViewModel, val
         }
     }
 
+
+
     override fun onBindViewHolder(holder: MainListViewHolder, position: Int) {
+
+
         dataList?.get(position)?.let {
             holder.setData(it)
         }
+
+        val dataCount = getItemCount()
+        if(dataCount > 0 && position == dataCount - 1){
+            viewModel.getMainList(lang)
+        }
+
     }
 
 

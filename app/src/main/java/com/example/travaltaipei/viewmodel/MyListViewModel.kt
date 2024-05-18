@@ -52,7 +52,12 @@ class MyListViewModel : ViewModel() {
 
     var selectData: ListItemData? = null
 
+    private var isLoading = false
+
     fun getMainList(lang: String) {
+        if (isLoading) {
+            return
+        }
         showLog("parameter lang is:$lang")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -61,14 +66,20 @@ class MyListViewModel : ViewModel() {
                     return@withContext
                 }
 
+                isLoading = true
+
                 flow {
                     val api = retrofit.create(TravelTaipeiApi::class.java)
                     emit(api.getMainPageList(lang, page).execute())
                 }.filter {
+                    if(!it.isSuccessful){
+                        isLoading = false
+                    }
                     it.isSuccessful
                 }.catch {
                     it.printStackTrace()
                     showLog("MyListViewModel.getMainList() have Exception")
+                    isLoading = false
                     listData.postValue(addableListData)
                 }.flowOn(Dispatchers.IO).collectLatest {
                     it.body()?.let {
@@ -79,6 +90,8 @@ class MyListViewModel : ViewModel() {
                         addableListData.addAll(it)
                         listData.postValue(addableListData)
                     }
+
+                    isLoading = false
                 }
             }
         }
