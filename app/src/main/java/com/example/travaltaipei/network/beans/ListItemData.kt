@@ -1,7 +1,9 @@
 package com.example.travaltaipei.network.beans
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 class ListItemData  {
     @SerializedName("id")
     var id : Int = 0
