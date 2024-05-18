@@ -12,7 +12,7 @@ class AttractionSource(val lang : String, val myNetManager: MyNetManager):
     var addableListData = ArrayList<ListItemData>()
     var total = -1
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ListItemData> {
-
+        showLog("start myNetManager.getDataByPageNum(lang , countPage())")
         val response = myNetManager.getDataByPageNum(lang , countPage())
 
         if (response.isSuccessful) {

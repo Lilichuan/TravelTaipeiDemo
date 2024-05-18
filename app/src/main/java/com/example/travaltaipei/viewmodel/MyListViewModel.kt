@@ -25,7 +25,7 @@ class MyListViewModel() : ViewModel() {
         return Pager(
             config = PagingConfig(pageSize = ITEMS_PER_PAGE, enablePlaceholders = false),
             pagingSourceFactory = { repository.attractionSource(lang) }
-        ).flow.cachedIn(viewModelScope).flowOn(Dispatchers.IO)
+        ).flow.cachedIn(viewModelScope)
     }
 }
 

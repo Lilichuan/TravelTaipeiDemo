@@ -19,8 +19,10 @@ import com.example.travaltaipei.R
 import com.example.travaltaipei.databinding.FragmentMainListBinding
 import com.example.travaltaipei.viewmodel.MyListViewModel
 import com.example.travaltaipei.viewmodel.showLog
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class MainListFragment : Fragment() {
@@ -45,8 +47,13 @@ class MainListFragment : Fragment() {
         initScreenWH()
         initRecyclerView()
 
+        return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
         lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+            withContext(Dispatchers.IO){
                 val items = viewModel.queryItems(getString(R.string.country_lang))
                 items.collectLatest {
                     adapter.submitData(it)
@@ -54,10 +61,7 @@ class MainListFragment : Fragment() {
             }
 
         }
-        return binding.root
     }
-
-
 
     private fun initRecyclerView() {
         adapter = MainListAdapter(context ,viewModel.getGson(), screenW)
