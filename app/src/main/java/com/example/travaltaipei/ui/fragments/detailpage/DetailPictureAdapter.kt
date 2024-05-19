@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import coil.load
 import com.example.travaltaipei.R
 import com.example.travaltaipei.network.beans.MainListItemDataImage
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 
 class DetailPictureAdapter(val list : List<MainListItemDataImage>) : Adapter<DetailPictureViewHolder>() {
@@ -25,15 +26,30 @@ class DetailPictureAdapter(val list : List<MainListItemDataImage>) : Adapter<Det
 
     override fun onBindViewHolder(holder: DetailPictureViewHolder, position: Int) {
         val urlStr = list.get(position).src
-        holder.imageView.setImageDrawable(null)
+        holder.resetPicture()
         if(!TextUtils.isEmpty(urlStr)){
             val uri = createUri(urlStr)
             //holder.imageView.load(uri)
-            Picasso.with(holder.imageView.context).load(uri).into(holder.imageView)
+            holder.picUrl = urlStr
+            Picasso.with(holder.imageView.context).load(uri).into(holder.imageView, PicassoCallback(urlStr!!, holder))
         }
     }
 
+
+    private class PicassoCallback(val processUrl : String, val holder: DetailPictureViewHolder,) : Callback{
+        override fun onSuccess() {
+            if(!holder.isSameUrl(processUrl)){
+                holder.resetPicture()
+            }
+        }
+
+        override fun onError() {
+
+        }
+    }
 }
+
+
 
 fun createUri(str : String?) : Uri {
     str?.let {
