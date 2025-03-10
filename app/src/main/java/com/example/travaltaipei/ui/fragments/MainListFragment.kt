@@ -17,8 +17,9 @@ import com.example.travaltaipei.R
 import com.example.travaltaipei.databinding.FragmentMainListBinding
 import com.example.travaltaipei.viewmodel.MyListViewModel
 import com.example.travaltaipei.viewmodel.showLog
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainListFragment : Fragment() {
 
     private lateinit var binding: FragmentMainListBinding

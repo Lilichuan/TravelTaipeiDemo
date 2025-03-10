@@ -8,10 +8,11 @@ import android.view.ViewGroup
 import android.webkit.WebSettings
 import android.webkit.WebView
 import com.example.travaltaipei.databinding.FragmentWebViewBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 const val ARG_WEB_VIEW_URL = "param1"
 
-
+@AndroidEntryPoint
 class WebViewFragment : Fragment() {
 
     private var url: String? = null

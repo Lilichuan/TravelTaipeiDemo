@@ -13,6 +13,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.travaltaipei.R
 import com.example.travaltaipei.databinding.FragmentInternetErrorBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,6 +25,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [InternetErrorFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class InternetErrorFragment : Fragment() {
 
     lateinit var viewBinder : FragmentInternetErrorBinding
