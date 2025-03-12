@@ -16,8 +16,7 @@ import javax.inject.Inject
 
 class MainListAdapter @Inject constructor(@ActivityContext var context: Context,
                                           val gson : Gson,
-) :
-    Adapter<MainListViewHolder>() {
+) :Adapter<MainListViewHolder>() {
 
     var dataList: List<ListItemData>? = null
     private var screenW : Int = 0
@@ -40,10 +39,7 @@ class MainListAdapter @Inject constructor(@ActivityContext var context: Context,
 
         viewBind.root.setOnClickListener {
             val data = it.tag as ListItemData
-            val str = gson.toJson(data)
-            val bundle = bundleOf(SINGLE_DATA_KEY to str)
             adapterCallback?.onItemSelect(data)
-            it.findNavController().navigate(R.id.action_main_list_to_detail_page, bundle)
         }
         return viewHolder
     }

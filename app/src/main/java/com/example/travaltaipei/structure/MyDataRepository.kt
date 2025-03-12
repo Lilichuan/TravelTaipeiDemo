@@ -1,23 +1,30 @@
 package com.example.travaltaipei.structure
 
+import androidx.lifecycle.MutableLiveData
 import com.example.travaltaipei.network.beans.ListItemData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 
 class MyDataRepository @Inject constructor() {
-    var addableListData = ArrayList<ListItemData>()
-    private val _listData = MutableStateFlow<List<ListItemData>>(addableListData)
-    val listDataFlow : StateFlow<List<ListItemData>> = _listData
+    private val addableListData = ArrayList<ListItemData>()
+    //private val _listData = MutableStateFlow<List<ListItemData>>(addableListData)
+    var listData: MutableLiveData<List<ListItemData>> = MutableLiveData<List<ListItemData>>()
+
     var total = 0
 
     var selectData: ListItemData? = null
 
     fun addData(receive : List<ListItemData>){
-        _listData.value = addableListData.also {
-            it.addAll(receive)
-        }
+        addableListData.addAll(receive)
+//        _listData.update {
+//            return@update ArrayList(addableListData)
+//        }
+
+        listData.postValue(addableListData)
     }
 
     fun countPage(): Int {

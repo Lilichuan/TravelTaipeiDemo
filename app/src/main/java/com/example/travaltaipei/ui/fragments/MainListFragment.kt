@@ -12,6 +12,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
@@ -44,31 +45,17 @@ class MainListFragment : Fragment() {
         val viewModel : MyListViewModel by hiltNavGraphViewModels(R.id.main_nav)
         binding = FragmentMainListBinding.inflate(inflater)
 
-        val param = getString(R.string.country_lang)
-        viewModel.getMainList(param)
+        initScreenWH()
+        initRecyclerView()
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
-
-                initScreenWH()
-                initRecyclerView()
-
-                viewModel.dataRepository.listDataFlow.collectLatest{
-//                    if(it.isEmpty()){
-//                        findNavController().navigate(R.id.action_main_list_to_net_error)
-//                    }else{
-//                        adapter.dataList = it
-//                        adapter.notifyDataSetChanged()
-//                    }
-                    adapter.dataList = it
-                    adapter.notifyDataSetChanged()
-                }
-
-
+                val param = getString(R.string.country_lang)
+                viewModel.getMainList(param)
             }
         }
 
-        adapter.adapterCallback = object : AdapterCallback{
+        adapter.adapterCallback = object : AdapterCallback {
             override fun onLoadMore() {
                 viewLifecycleOwner.lifecycleScope.launch {
                     viewModel.getMainList(getString(R.string.country_lang))
@@ -84,10 +71,13 @@ class MainListFragment : Fragment() {
                 }
             }
         }
+        viewModel.dataRepository.listData.observe(viewLifecycleOwner, {
+            adapter.dataList = it
+            adapter.notifyDataSetChanged()
+        })
 
         return binding.root
     }
-
 
     private fun initRecyclerView() {
         adapter.initScreen(screenW, getString(R.string.country_lang))
