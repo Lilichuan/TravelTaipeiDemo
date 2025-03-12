@@ -24,6 +24,7 @@ import com.example.travaltaipei.viewmodel.MyListViewModel
 import com.example.travaltaipei.viewmodel.showLog
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -43,23 +44,27 @@ class MainListFragment : Fragment() {
         val viewModel : MyListViewModel by hiltNavGraphViewModels(R.id.main_nav)
         binding = FragmentMainListBinding.inflate(inflater)
 
+        val param = getString(R.string.country_lang)
+        viewModel.getMainList(param)
+
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
 
                 initScreenWH()
                 initRecyclerView()
 
-                viewModel.dataRepository.listDataFlow.collect{
-                    if(it.isEmpty()){
-                        findNavController().navigate(R.id.action_main_list_to_net_error)
-                    }else{
-                        adapter.dataList = it
-                        adapter.notifyDataSetChanged()
-                    }
+                viewModel.dataRepository.listDataFlow.collectLatest{
+//                    if(it.isEmpty()){
+//                        findNavController().navigate(R.id.action_main_list_to_net_error)
+//                    }else{
+//                        adapter.dataList = it
+//                        adapter.notifyDataSetChanged()
+//                    }
+                    adapter.dataList = it
+                    adapter.notifyDataSetChanged()
                 }
 
-                val param = getString(R.string.country_lang)
-                viewModel.getMainList(param)
+
             }
         }
 

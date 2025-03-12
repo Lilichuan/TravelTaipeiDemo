@@ -4,7 +4,7 @@ package com.example.travaltaipei.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.travaltaipei.network.TravelTaipeiApiWrapper
+import com.example.travaltaipei.network.TravelTaipeiApi
 import com.example.travaltaipei.structure.MyDataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MyListViewModel @Inject constructor (
     val dataRepository: MyDataRepository,
-    private val taipeiApi : TravelTaipeiApiWrapper
+    private val taipeiApi : TravelTaipeiApi,
 ): ViewModel() {
 
 
@@ -30,10 +30,9 @@ class MyListViewModel @Inject constructor (
     val mainListLoadingState: StateFlow<Boolean> = _mainListLoadingState
 
     fun getMainList(lang: String) {
-        if (mainListLoadingState.value) {
+        if (!mainListLoadingState.value) {
             return
         }
-        showLog("parameter lang is:$lang")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val page = dataRepository.countPage()
@@ -53,6 +52,7 @@ class MyListViewModel @Inject constructor (
                 }.catch {
                     it.printStackTrace()
                     showLog("MyListViewModel.getMainList() have Exception")
+                    it.printStackTrace()
                     _mainListLoadingState.value = false
                 }.flowOn(Dispatchers.IO).collectLatest {
                     _mainListLoadingState.value = false

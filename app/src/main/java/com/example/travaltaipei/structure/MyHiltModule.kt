@@ -2,29 +2,36 @@ package com.example.travaltaipei.structure
 
 import android.util.Log
 import com.example.travaltaipei.network.TravelTaipeiApi
-import com.example.travaltaipei.network.TravelTaipeiApiWrapper
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 @Module
-@InstallIn(ActivityComponent::class)
+@InstallIn(SingletonComponent::class)
 object MyHiltModule {
 
     @Provides
+    @Singleton
     fun provideGson() : Gson{
         return Gson()
     }
 
     @Provides
-    fun provideApi(gson: Gson) : TravelTaipeiApiWrapper {
+    @Singleton
+    fun provideTravelTaipeiApi(retrofit: Retrofit) : TravelTaipeiApi {
+        return retrofit.create(TravelTaipeiApi::class.java)
+    }
 
+    @Provides
+    @Singleton
+    fun provideRetrofit(gson: Gson) : Retrofit{
         val logging = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
             override fun log(message: String) {
                 Log.d("TimApp",message)
@@ -34,15 +41,12 @@ object MyHiltModule {
         logging.level = HttpLoggingInterceptor.Level.BODY
         val okHttpClient = OkHttpClient().newBuilder().addInterceptor(logging).build()
 
-        val retrofit = Retrofit.Builder()
+        return Retrofit.Builder()
             .baseUrl("https://www.travel.taipei/open-api/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()
 
-        val wrapper = TravelTaipeiApiWrapper()
-        wrapper.api = retrofit.create(TravelTaipeiApi::class.java)
-        return wrapper
     }
 
     @Provides
