@@ -42,4 +42,10 @@ class MyHiltModule {
             .build()
         return retrofit.create(TravelTaipeiApi::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideDataRepository() : MyDataRepository{
+        return MyDataRepository()
+    }
 }

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.Fragment
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -23,21 +24,16 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainListFragment : Fragment() {
 
     private lateinit var binding: FragmentMainListBinding
-    private lateinit var viewModel: MyListViewModel
     private lateinit var adapter : MainListAdapter
     private var screenW = 0
     private var screenH = 0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        val viewModel: MyListViewModel by hiltNavGraphViewModels(R.id.nav_graph)
         binding = FragmentMainListBinding.inflate(inflater)
         return binding.root
     }

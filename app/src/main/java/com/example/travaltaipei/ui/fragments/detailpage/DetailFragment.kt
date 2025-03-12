@@ -18,11 +18,12 @@ import com.example.travaltaipei.databinding.FragmentDetailBinding
 import com.example.travaltaipei.network.beans.ListItemData
 import com.example.travaltaipei.ui.fragments.ARG_WEB_VIEW_URL
 import com.example.travaltaipei.viewmodel.MyListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 
 const val SINGLE_DATA_KEY = "single_data_key"
 
-
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
 
     lateinit var viewBind: FragmentDetailBinding
