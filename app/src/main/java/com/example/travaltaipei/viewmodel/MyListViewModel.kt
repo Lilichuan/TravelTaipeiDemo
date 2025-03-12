@@ -4,9 +4,8 @@ package com.example.travaltaipei.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.travaltaipei.network.TravelTaipeiApi
+import com.example.travaltaipei.network.TravelTaipeiApiWrapper
 import com.example.travaltaipei.structure.MyDataRepository
-import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,9 +21,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyListViewModel @Inject constructor (
-    private val gson : Gson,
     val dataRepository: MyDataRepository,
-    private val taipeiApi : TravelTaipeiApi
+    private val taipeiApi : TravelTaipeiApiWrapper
 ): ViewModel() {
 
 

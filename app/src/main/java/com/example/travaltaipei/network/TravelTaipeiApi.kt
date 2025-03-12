@@ -7,7 +7,7 @@ import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-public interface TravelTaipeiApi {
+interface TravelTaipeiApi {
     @Headers("Accept: application/json")
     @GET("{lang}/Attractions/All")
     fun getMainPageList(@Path("lang")  language : String , @Query("page") page: Int) : Call<AllPageData>

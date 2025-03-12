@@ -3,9 +3,10 @@ package com.example.travaltaipei.structure
 import com.example.travaltaipei.network.beans.ListItemData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import javax.inject.Inject
 
 
-class MyDataRepository {
+class MyDataRepository @Inject constructor() {
     var addableListData = ArrayList<ListItemData>()
     private val _listData = MutableStateFlow<List<ListItemData>>(addableListData)
     val listDataFlow : StateFlow<List<ListItemData>> = _listData

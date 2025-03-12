@@ -9,16 +9,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.travaltaipei.R
 import com.example.travaltaipei.databinding.FragmentDetailBinding
 import com.example.travaltaipei.network.beans.ListItemData
 import com.example.travaltaipei.ui.fragments.ARG_WEB_VIEW_URL
-import com.example.travaltaipei.viewmodel.MyListViewModel
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 const val SINGLE_DATA_KEY = "single_data_key"
@@ -28,11 +27,7 @@ class DetailFragment : Fragment() {
 
     lateinit var viewBind: FragmentDetailBinding
     var data: ListItemData? = null
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    @Inject lateinit var gson : Gson
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,10 +61,9 @@ class DetailFragment : Fragment() {
     }
 
     private fun initDataFromViewModel() {
-        val viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(MyListViewModel::class.java)
         val str = arguments?.getString(SINGLE_DATA_KEY)
         str?.let {
-            data = viewModel.gson.fromJson(str, ListItemData::class.java)
+            data = gson.fromJson(str, ListItemData::class.java)
         }
     }
 

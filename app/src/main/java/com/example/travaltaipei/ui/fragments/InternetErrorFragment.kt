@@ -9,11 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.travaltaipei.R
 import com.example.travaltaipei.databinding.FragmentInternetErrorBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,7 +54,9 @@ class InternetErrorFragment : Fragment() {
     }
 
     private fun gotoMainPage() {
-        findNavController().navigate(R.id.action_net_error_to_main_list)
+        viewLifecycleOwner.lifecycleScope.launch{
+            findNavController().navigate(R.id.action_net_error_to_main_list)
+        }
     }
 
     override fun onDestroy() {

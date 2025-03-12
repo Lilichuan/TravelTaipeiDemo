@@ -1,6 +1,8 @@
 package com.example.travaltaipei.structure
 
+import android.util.Log
 import com.example.travaltaipei.network.TravelTaipeiApi
+import com.example.travaltaipei.network.TravelTaipeiApiWrapper
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -10,25 +12,22 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Module
 @InstallIn(ActivityComponent::class)
-class MyHiltModule {
+object MyHiltModule {
 
-    @Singleton
     @Provides
     fun provideGson() : Gson{
         return Gson()
     }
 
     @Provides
-    fun provideApi(gson: Gson) : TravelTaipeiApi{
+    fun provideApi(gson: Gson) : TravelTaipeiApiWrapper {
 
         val logging = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
             override fun log(message: String) {
-                //showLog(message)
+                Log.d("TimApp",message)
             }
         })
 
@@ -40,11 +39,13 @@ class MyHiltModule {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()
-        return retrofit.create(TravelTaipeiApi::class.java)
+
+        val wrapper = TravelTaipeiApiWrapper()
+        wrapper.api = retrofit.create(TravelTaipeiApi::class.java)
+        return wrapper
     }
 
     @Provides
-    @Singleton
     fun provideDataRepository() : MyDataRepository{
         return MyDataRepository()
     }

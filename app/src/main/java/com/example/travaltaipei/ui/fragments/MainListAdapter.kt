@@ -10,14 +10,23 @@ import com.example.travaltaipei.R
 import com.example.travaltaipei.databinding.MainListItemBinding
 import com.example.travaltaipei.network.beans.ListItemData
 import com.example.travaltaipei.ui.fragments.detailpage.SINGLE_DATA_KEY
-import com.example.travaltaipei.viewmodel.MyListViewModel
+import com.google.gson.Gson
+import dagger.hilt.android.qualifiers.ActivityContext
+import javax.inject.Inject
 
-class MainListAdapter(var context: Context?, var viewModel: MyListViewModel,
-                      private val screenW: Int,
-                      private val lang : String) :
+class MainListAdapter @Inject constructor(@ActivityContext var context: Context,
+                                          val gson : Gson,
+) :
     Adapter<MainListViewHolder>() {
 
     var dataList: List<ListItemData>? = null
+    private var screenW : Int = 0
+    private var lang : String = ""
+
+    fun initScreen(screenWidth : Int , language : String){
+        screenW = screenWidth
+        lang = language
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainListViewHolder {
         val viewBind = MainListItemBinding.inflate(LayoutInflater.from(parent.context))
@@ -31,9 +40,9 @@ class MainListAdapter(var context: Context?, var viewModel: MyListViewModel,
 
         viewBind.root.setOnClickListener {
             val data = it.tag as ListItemData
-            val str = viewModel.gson.toJson(data)
+            val str = gson.toJson(data)
             val bundle = bundleOf(SINGLE_DATA_KEY to str)
-            viewModel.selectData = data
+            adapterCallback?.onItemSelect(data)
             it.findNavController().navigate(R.id.action_main_list_to_detail_page, bundle)
         }
         return viewHolder
@@ -58,10 +67,12 @@ class MainListAdapter(var context: Context?, var viewModel: MyListViewModel,
 
         val dataCount = getItemCount()
         if(dataCount > 0 && position == dataCount - 1){
-            viewModel.getMainList(lang)
+            adapterCallback?.onLoadMore()
         }
 
     }
+
+    var adapterCallback : AdapterCallback? = null
 
 
 }
